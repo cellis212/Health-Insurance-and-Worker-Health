@@ -1,0 +1,445 @@
+{
+  "created_at": "2025-12-20T11:20:03.311991",
+  "updated_at": "2025-12-20T11:20:03.315436",
+  "environment": {
+    "python_version": "3.11.13",
+    "node_version": "22.20.0",
+    "r_version": "4.5.1",
+    "platform": "darwin",
+    "working_directory": "/Users/cameron/Dropbox/School/Papers/Health Insurance and Worker Health/Cam Code"
+  },
+  "git": {
+    "is_git_repo": true,
+    "current_branch": "main",
+    "remote_url": "https://github.com/cellis212/Cam-Code.git",
+    "has_uncommitted_changes": true,
+    "last_commit_sha": "a636ef67",
+    "last_commit_message": "Remove main analysis scripts for the DiD and IV methodologies, including data preprocessing, model e"
+  },
+  "local_directory": {
+    "path": "/Users/cameron/Dropbox/School/Papers/Health Insurance and Worker Health/Cam Code",
+    "alias": "local",
+    "exists": true,
+    "total_files": 403,
+    "total_directories": 69,
+    "file_types": [
+      {
+        "extension": "(no extension)",
+        "count": 168,
+        "total_size_bytes": 32711,
+        "files": [
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/DBI",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/DescTools",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/Exact",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/Formula",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/MatchIt",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/R6",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/RColorBrewer",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/Rcpp",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/RcppProgress",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/askpass",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/backports",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/base64enc",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/bit",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/bit64",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/blob",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/brew",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/broom",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/bslib",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/cachem",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/callr"
+        ]
+      },
+      {
+        "extension": ".r",
+        "count": 59,
+        "total_size_bytes": 264996,
+        "files": [
+          "DiDs - interact.R",
+          "DiDs.R",
+          "Event Studies.R",
+          "Functions_and_Options.R",
+          "Test_Control_Function.r",
+          "Visualization.R",
+          "analysis.R",
+          "data_exploration.R",
+          "data_prep.R",
+          "data_prep_ins_level_iv.R",
+          "data_prep_pre_analysis.R",
+          "install_packages.R",
+          "load_acs_data.R",
+          "renv/activate.R",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/doc/ci.R",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/doc/docker.R",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/doc/faq.R",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/doc/package-install.R",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/doc/package-sources.R",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/doc/packages.R"
+        ]
+      },
+      {
+        "extension": ".html",
+        "count": 39,
+        "total_size_bytes": 790864,
+        "files": [
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/doc/ci.html",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/doc/docker.html",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/doc/faq.html",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/doc/index.html",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/doc/package-install.html",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/doc/package-sources.html",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/doc/packages.html",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/doc/packrat.html",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/doc/profiles.html",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/doc/python.html",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/doc/renv.html",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/doc/rsconnect.html",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/html/00Index.html",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/doc/ci.html",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/doc/docker.html",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/doc/faq.html",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/doc/index.html",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/doc/package-install.html",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/doc/package-sources.html",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/doc/packages.html"
+        ]
+      },
+      {
+        "extension": ".rmd",
+        "count": 33,
+        "total_size_bytes": 243171,
+        "files": [
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/doc/ci.Rmd",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/doc/docker.Rmd",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/doc/faq.Rmd",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/doc/package-install.Rmd",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/doc/package-sources.Rmd",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/doc/packages.Rmd",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/doc/packrat.Rmd",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/doc/profiles.Rmd",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/doc/python.Rmd",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/doc/renv.Rmd",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/doc/rsconnect.Rmd",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/doc/ci.Rmd",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/doc/docker.Rmd",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/doc/faq.Rmd",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/doc/package-install.Rmd",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/doc/package-sources.Rmd",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/doc/packages.Rmd",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/doc/packrat.Rmd",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/doc/profiles.Rmd",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/doc/python.Rmd"
+        ]
+      },
+      {
+        "extension": ".rds",
+        "count": 30,
+        "total_size_bytes": 25151,
+        "files": [
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/Meta/Rd.rds",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/Meta/features.rds",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/Meta/hsearch.rds",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/Meta/links.rds",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/Meta/nsInfo.rds",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/Meta/package.rds",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/Meta/vignette.rds",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/help/aliases.rds",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/help/paths.rds",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/repos/src/contrib/PACKAGES.rds",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/Meta/Rd.rds",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/Meta/features.rds",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/Meta/hsearch.rds",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/Meta/links.rds",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/Meta/nsInfo.rds",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/Meta/package.rds",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/Meta/vignette.rds",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/help/aliases.rds",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/help/paths.rds",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/repos/src/contrib/PACKAGES.rds"
+        ]
+      },
+      {
+        "extension": ".md",
+        "count": 7,
+        "total_size_bytes": 274597,
+        "files": [
+          "Data/intermediate_data/raw_data_exploration.md",
+          "Data/intermediate_data/remote_work_summary.md",
+          "README for LLM.md",
+          "llm_temp_code/data_summary.md",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/NEWS.md",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/NEWS.md",
+          "renv/library/windows/R-4.4/x86_64-w64-mingw32/renv/NEWS.md"
+        ]
+      },
+      {
+        "extension": ".gz",
+        "count": 6,
+        "total_size_bytes": 1648371,
+        "files": [
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/repos/src/contrib/PACKAGES.gz",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/repos/src/contrib/renv_1.1.1.tar.gz",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/repos/src/contrib/PACKAGES.gz",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/repos/src/contrib/renv_1.1.1.tar.gz",
+          "renv/library/windows/R-4.4/x86_64-w64-mingw32/renv/repos/src/contrib/PACKAGES.gz",
+          "renv/library/windows/R-4.4/x86_64-w64-mingw32/renv/repos/src/contrib/renv_1.1.1.tar.gz"
+        ]
+      },
+      {
+        "extension": ".rdx",
+        "count": 6,
+        "total_size_bytes": 62499,
+        "files": [
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/R/renv.rdx",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/help/renv.rdx",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/R/renv.rdx",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/help/renv.rdx",
+          "renv/library/windows/R-4.4/x86_64-w64-mingw32/renv/R/renv.rdx",
+          "renv/library/windows/R-4.4/x86_64-w64-mingw32/renv/help/renv.rdx"
+        ]
+      },
+      {
+        "extension": ".rdb",
+        "count": 6,
+        "total_size_bytes": 4347639,
+        "files": [
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/R/renv.rdb",
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/help/renv.rdb",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/R/renv.rdb",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/help/renv.rdb",
+          "renv/library/windows/R-4.4/x86_64-w64-mingw32/renv/R/renv.rdb",
+          "renv/library/windows/R-4.4/x86_64-w64-mingw32/renv/help/renv.rdb"
+        ]
+      },
+      {
+        "extension": ".json",
+        "count": 4,
+        "total_size_bytes": 18674,
+        "files": [
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/schema/draft-07.renv.lock.schema.json",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/schema/draft-07.renv.lock.schema.json",
+          "renv/library/windows/R-4.4/x86_64-w64-mingw32/renv/schema/draft-07.renv.lock.schema.json",
+          "renv/settings.json"
+        ]
+      },
+      {
+        "extension": ".py",
+        "count": 3,
+        "total_size_bytes": 9347,
+        "files": [
+          "collect_reg_results.py",
+          "explore_remote_work.py",
+          "llm_temp_code/explore_ppp_data.py"
+        ]
+      },
+      {
+        "extension": ".png",
+        "count": 3,
+        "total_size_bytes": 277022,
+        "files": [
+          "Data/figures/remote_work_by_sector.png",
+          "Data/figures/top_20_industries_remote_work.png",
+          "interaction_terms_plot_local.png"
+        ]
+      },
+      {
+        "extension": ".yml",
+        "count": 3,
+        "total_size_bytes": 43044,
+        "files": [
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/config.yml",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/config.yml",
+          "renv/library/windows/R-4.4/x86_64-w64-mingw32/renv/config.yml"
+        ]
+      },
+      {
+        "extension": ".bat",
+        "count": 3,
+        "total_size_bytes": 327,
+        "files": [
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/bin/renv.bat",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/bin/renv.bat",
+          "renv/library/windows/R-4.4/x86_64-w64-mingw32/renv/bin/renv.bat"
+        ]
+      },
+      {
+        "extension": ".sh",
+        "count": 3,
+        "total_size_bytes": 426,
+        "files": [
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/resources/scripts-git-askpass.sh",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/resources/scripts-git-askpass.sh",
+          "renv/library/windows/R-4.4/x86_64-w64-mingw32/renv/resources/scripts-git-askpass.sh"
+        ]
+      },
+      {
+        "extension": ".cmd",
+        "count": 3,
+        "total_size_bytes": 1119,
+        "files": [
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/resources/scripts-git-askpass.cmd",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/resources/scripts-git-askpass.cmd",
+          "renv/library/windows/R-4.4/x86_64-w64-mingw32/renv/resources/scripts-git-askpass.cmd"
+        ]
+      },
+      {
+        "extension": ".c",
+        "count": 3,
+        "total_size_bytes": 57615,
+        "files": [
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/ext/renv.c",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/ext/renv.c",
+          "renv/library/windows/R-4.4/x86_64-w64-mingw32/renv/ext/renv.c"
+        ]
+      },
+      {
+        "extension": ".dcf",
+        "count": 3,
+        "total_size_bytes": 405,
+        "files": [
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/rstudio/addins.dcf",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/rstudio/addins.dcf",
+          "renv/library/windows/R-4.4/x86_64-w64-mingw32/renv/rstudio/addins.dcf"
+        ]
+      },
+      {
+        "extension": ".css",
+        "count": 3,
+        "total_size_bytes": 5532,
+        "files": [
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/html/R.css",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/html/R.css",
+          "renv/library/windows/R-4.4/x86_64-w64-mingw32/renv/html/R.css"
+        ]
+      },
+      {
+        "extension": ".svg",
+        "count": 3,
+        "total_size_bytes": 217602,
+        "files": [
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/help/figures/logo.svg",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/help/figures/logo.svg",
+          "renv/library/windows/R-4.4/x86_64-w64-mingw32/renv/help/figures/logo.svg"
+        ]
+      },
+      {
+        "extension": ".csv",
+        "count": 3,
+        "total_size_bytes": 13910,
+        "files": [
+          "Data/intermediate_data/industry_remote_work_share_2019.csv",
+          "Data/intermediate_data/industry_remote_work_share_2digit_2019.csv",
+          "Data/intermediate_data/industry_remote_work_share_3digit_2019.csv"
+        ]
+      },
+      {
+        "extension": ".so",
+        "count": 2,
+        "total_size_bytes": 140848,
+        "files": [
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/libs/renv.so",
+          "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/libs/renv.so"
+        ]
+      },
+      {
+        "extension": ".txt",
+        "count": 1,
+        "total_size_bytes": 11080,
+        "files": [
+          "cursorrules.txt"
+        ]
+      },
+      {
+        "extension": ".pdf",
+        "count": 1,
+        "total_size_bytes": 250775,
+        "files": [
+          "Covid_Moral_Hazard_in_ESI.pdf"
+        ]
+      },
+      {
+        "extension": ".code-workspace",
+        "count": 1,
+        "total_size_bytes": 43,
+        "files": [
+          "Health Insurance and Worker Health.code-workspace"
+        ]
+      },
+      {
+        "extension": ".lock",
+        "count": 1,
+        "total_size_bytes": 297451,
+        "files": [
+          "renv.lock"
+        ]
+      },
+      {
+        "extension": ".table",
+        "count": 1,
+        "total_size_bytes": 0,
+        "files": [
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/data.table"
+        ]
+      },
+      {
+        "extension": ".methodss3",
+        "count": 1,
+        "total_size_bytes": 0,
+        "files": [
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/R.methodsS3"
+        ]
+      },
+      {
+        "extension": ".cache",
+        "count": 1,
+        "total_size_bytes": 0,
+        "files": [
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/R.cache"
+        ]
+      },
+      {
+        "extension": ".utils",
+        "count": 1,
+        "total_size_bytes": 0,
+        "files": [
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/R.utils"
+        ]
+      },
+      {
+        "extension": ".oo",
+        "count": 1,
+        "total_size_bytes": 0,
+        "files": [
+          "renv/library/macos/R-4.4/aarch64-apple-darwin20/R.oo"
+        ]
+      }
+    ],
+    "config_files": [
+      ".Rprofile"
+    ],
+    "notable_directories": [
+      "Data",
+      "Data/figures",
+      "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/R",
+      "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/help/figures",
+      "renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/repos/src",
+      "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/R",
+      "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/help/figures",
+      "renv/library/macos/R-4.5/aarch64-apple-darwin20/renv/repos/src",
+      "renv/library/windows/R-4.4/x86_64-w64-mingw32/renv/R",
+      "renv/library/windows/R-4.4/x86_64-w64-mingw32/renv/help/figures",
+      "renv/library/windows/R-4.4/x86_64-w64-mingw32/renv/repos/src"
+    ]
+  },
+  "connected_directories": [],
+  "code_summary": {
+    "total_classes": 0,
+    "total_functions": 0,
+    "total_pydantic_models": 0,
+    "elements": []
+  },
+  "all_config_files": [
+    ".Rprofile"
+  ],
+  "total_lines_of_code": 9302
+}

@@ -5,17 +5,9 @@
 # Options -----------------------------------------------------------------
 # Paths
 if(getwd() == "C:/Users/celli/Dropbox/School/Papers/Health Insurance and Worker Health/Cam Code"){
-  figure_path <- "C:/Users/celli/Dropbox/Apps/Overleaf/Covid Moral Hazard in ESI/figures/"
-  table_path <- "C:/Users/celli/Dropbox/Apps/Overleaf/Covid Moral Hazard in ESI/tables/"
+  figure_path <- "C:/Users/celli/Dropbox/Apps/Overleaf/Self-Insurance IV Analysis/figures/"
+  table_path <- "C:/Users/celli/Dropbox/Apps/Overleaf/Self-Insurance IV Analysis/tables/"
 }
-
-
-# Table vars
-mdig = 2 # Number of digits
-
-# Figure vars
-pointSize = 2
-fontSize = 15
 
 
 # Custom Functions --------------------------------------------------------

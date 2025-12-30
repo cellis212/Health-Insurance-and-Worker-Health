@@ -1,36 +1,14 @@
 import os
-from os.path import join, exists
+from os.path import join
 import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-from datetime import date
 from openpyxl import Workbook
 from openpyxl import load_workbook
-# ### ======================================================================
-# ### ======================================================================
-# ### ======================================================================
-# settings
-# ### ======================================================================
-# ### ======================================================================
-# ### ======================================================================
-
+# Settings
 project_dir = "C:/Users/yl10702/Shan Dropbox/Team Account/Health_Insurance_and_Worker_Health"
 out_dir = join(project_dir, "Result/bootstrap")
 
-
-
-# ### ======================================================================
-# ### ======================================================================
-# ### ======================================================================
-# step1: process data
-# ### ======================================================================
-# ### ======================================================================
-# ### ======================================================================
-# combine results
-# key = ['county_above_worried_dummy', 'county_happening', 'county_log_happening', 'county_worried', 'county_z_score_worried',
-#        'state_above_worried_dummy', 'state_happening', 'state_log_happening', 'state_worried', 'state_z_score_worried']
+# Process data
 key = ['bootstrap-l1']
-# df = pd.read_csv(join(out_dir, "result-reg-bootstrap-l1_log_incurred_claim_amt_ms-FY_FE.txt"), delimiter = "\t")
 for keywords in key:
     df_tot = None
     for filename in os.listdir(out_dir):

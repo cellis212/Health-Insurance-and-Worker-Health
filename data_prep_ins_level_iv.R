@@ -44,11 +44,6 @@ data <- data %>%
 # Load the new CSV file with instruments
 ivdata <- fread(file.path(interm_dir, "healthpremium_iv_at.csv")) %>% as_tibble()
 
-# vtable(data,
-#   out = "browser",
-#   values = TRUE,
-#   summ = c("mean(x)", "median(x)", "min(x)", "max(x)", "propNA(x)")
-# )
 
 # Prepare ivdata for joining
 ivdata <- ivdata %>%
@@ -144,39 +139,7 @@ data <- data %>%
 # Try leave-out at the ins level
 data$iv_var <- data$iv_var_1 - data$iv_var_2
 
-# Create 2020 jan insurance status variable and apply to all obs from same firm
-data <- data %>%
-  group_by(ein) %>%
-  mutate(
-    ins_status_2020_jan = max(ifelse(year == 2020 & month == 1, fully_ratio, 0), na.rm = TRUE),
-    ins_status_2018_jan = max(ifelse(year == 2018 & month == 1, fully_ratio, 0), na.rm = TRUE)
-  ) %>%
-  ungroup()
-
-# Create average pre-2020 iv_var at the firm level
-data <- data %>%
-  group_by(ein) %>%
-  mutate(
-    iv_var_2019 = mean(iv_var[year == 2019], na.rm = TRUE),
-    iv_var_2018 = mean(iv_var[year == 2018], na.rm = TRUE),
-    iv_var_pre_2020 = mean(iv_var[year < 2020], na.rm = TRUE)
-  ) %>%
-  ungroup() %>% 
-  mutate(iv_var_increase = iv_var_2019 - iv_var_2018)
-
-summary(data$iv_var_increase)
-
-# Create post covid variable (starting from month 3 of 2020)
-data <- data %>%
-  mutate(post_covid = ifelse(year > 2020 | (year == 2020 & month >= 3), 1, 0))
-
-
-# Create DID variables
-data <- data %>%
-  mutate(
-    did_fully = fully_ratio * post_covid,
-    did_fully_2020 = ins_status_2020_jan * (year == 2020)
-  )
+# Self-insurance status is captured by fully_ratio (continuous)
 
 # Create year-month factor variable
 data <- data %>%

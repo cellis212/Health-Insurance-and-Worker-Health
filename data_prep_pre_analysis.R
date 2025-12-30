@@ -4,6 +4,8 @@
 rm(list = ls())
 options(width = 200)
 
+set.seed(42)
+
 # Load required libraries
 library(data.table)
 library(tidyverse)
@@ -11,6 +13,7 @@ library(DescTools)
 library(MatchIt)
 library(vtable)
 library(haven)
+library(fixest)
 
 # Define file paths for project directories
 project_dir <- "../Data"
@@ -19,135 +22,77 @@ interm_dir <- file.path(project_dir, "intermediate_data")
 # Load the prepared dataset
 load(file.path(interm_dir, "prepared_data_for_analysis.RData"))
 
-# Data cleaning and preparation -----------------------------------------------
+# Configurable base period for IV construction (use most recent complete year)
+base_year <- max(data$year)
+base_month <- 1
 
-# Create event time variables
+# Get the average of the fully_ratio for each czone-year-month
 data <- data %>%
-  mutate(
-    event_date = as.Date(paste(year, month, "01", sep = "-"), format = "%Y-%m-%d"),
-    treatment_date = as.Date("2020-03-01"),
-    event_time = interval(treatment_date, event_date) %/% months(1),
-    event_time_fac = as.factor(event_time)
-  )
-
-# Extract first digit and first two digits of business_code
-data <- data %>%
-  mutate(
-    first_digit_business_code = as.factor(substr(business_code, 1, 1)),
-    first_two_digits_business_code = as.factor(substr(business_code, 1, 2))
-  )
-
-# Create num_covered_2020 variable for March 2020
-data <- data %>%
-  group_by(ein) %>%
-  mutate(
-    num_covered_2020 = ifelse(year == 2020 & month == 3, all_INS_PRSN_COVERED_EOY_CNT, NA)
-  ) %>%
-  fill(num_covered_2020, .direction = "updown") %>%
+  filter(mixed_d == 0) %>%
+  group_by(czone, year, month) %>%
+  mutate(fully_ratio_avg = mean(fully_ratio, na.rm = TRUE)) %>%
   ungroup()
 
-# Create interaction variables
+
+# Now de-mean that for each czone
 data <- data %>%
-  mutate(
-    year_month = factor(paste(year, month)),
-    year_month_state = factor(paste(year, month, state_abbr)),
-    year_month_czone = factor(paste(year, month, czone)),
-    year_month_bins = factor(paste(year, month, ins_prsn_covered_eoy_cnt_bins)),
-    year_month_two_digit = factor(paste(year, month, first_two_digits_business_code))
-  )
+  group_by(czone) %>%
+  mutate(fully_ratio_avg_centered = fully_ratio_avg - mean(fully_ratio_avg, na.rm = TRUE)) %>%
+  ungroup()
 
-# Matching to impute missing IV values ----------------------------------------
-l <- which(is.na(data$linsurer_otstAMLR_LARGEGROUP) & !(is.na(data$naic_code)))
-k <- which(!(is.na(data$linsurer_otstAMLR_LARGEGROUP)) & (is.na(data$naic_code)))
+data$iv_var <- data$fully_ratio_avg_centered
 
+# Bin iv_var (evenly) using base period
+bins_data <- data %>%
+  filter(year == base_year & month == base_month) %>%
+  mutate(iv_var_bins = {
+    n_bins <- 10
+    bins <- ntile(iv_var, n_bins)
+    bin_labels <- sapply(1:n_bins, function(i) {
+      bin_range <- range(iv_var[bins == i], na.rm = TRUE)
+      paste0("[", bin_range[1], ", ", bin_range[2], "]")
+    })
+    factor(bins, levels = 1:n_bins, labels = bin_labels)
+  }) %>%
+  select(ein, iv_var_bins)
 
-# Specify the preferred IV variables
-IV_Variables <- c("linsurer_otstAMLR_LARGEGROUP")
-
-
-# Create average pre-2020 iv_var at the firm level
+# Join bins back to data
 data <- data %>%
-  group_by(ein) %>%
-  mutate(
-    iv_var_2019 = mean(linsurer_otstAMLR_LARGEGROUP[year == 2019], na.rm = TRUE),
-    iv_var_2018 = mean(linsurer_otstAMLR_LARGEGROUP[year == 2018], na.rm = TRUE),
-    iv_var_pre_2020 = mean(linsurer_otstAMLR_LARGEGROUP[year < 2020], na.rm = TRUE)
-  ) %>%
-  ungroup() 
+  left_join(bins_data, by = "ein", relationship = "many-to-many")
 
 
-# data$linsurer_otstAMLR_LARGEGROUP <- data$iv_var_2019
-
-# Create an indicator for missing IV values
+# Create centered iv_var using leave-one-out means at base period
 data <- data %>%
-  mutate(
-    missing_iv_var = if_else(
-      is.na(linsurer_otstAMLR_LARGEGROUP), 1, 0
-    )
-  )
-
-
-# Filter out rows with missing key variables
-data <- data %>%
-  filter(complete.cases(fips, state_abbr, first_two_digits_business_code, ins_prsn_covered_eoy_cnt, ins_prsn_covered_eoy_cnt_bins, year))
-
-
-match_result <- matchit(
-    formula = missing_iv_var ~ fips,
-    exact = ~ state_abbr + year + month,
-    data = data,
-    method = "nearest",
-    distance = "mahalanobis",
-    replace = TRUE,
-    verbose = TRUE,
-    discard = "none"
-  )
-
-# Get indices of matched pairs
-i <- as.numeric(row.names(match_result$match.matrix))
-k <- as.numeric(match_result$match.matrix)
-
-# Impute missing IV values
-data$linsurer_otstAMLR_LARGEGROUP[i] <- data$linsurer_otstAMLR_LARGEGROUP[k]
-
-# Impute missing naic_code
-data$naic_code[i] <- data$naic_code[k]
-
-# Create average pre-2020 iv_var at the firm level
-data <- data %>%
-  group_by(ein) %>%
-  mutate(
-    iv_var_2019 = mean(iv_var[year == 2019], na.rm = TRUE),
-    iv_var_2018 = mean(iv_var[year == 2018], na.rm = TRUE),
-    iv_var_pre_2020 = mean(iv_var[year < 2020], na.rm = TRUE)
-  ) %>%
+  filter(year == base_year) %>%
+  filter(month == base_month) %>%
+  group_by(czone, state_abbr, ins_prsn_covered_eoy_cnt_bins) %>%
+  mutate(e_wi_total = sum(fully_ratio, na.rm = TRUE),
+  n_wi = n()) %>%
+  ungroup()  %>% 
+  group_by(state_abbr, ins_prsn_covered_eoy_cnt_bins) %>%
+  mutate(e_w_total = sum(fully_ratio, na.rm = TRUE),
+  n_w = n()) %>%
   ungroup() %>% 
-  mutate(iv_var_increase = iv_var_2019 - iv_var_2018)
-
-
+  mutate(e_wi = (e_wi_total - fully_ratio) / (n_wi - 1), 
+    e_w = (e_w_total - fully_ratio) / (n_w - 1),
+    e_centered = e_wi - e_w) %>% 
+    select(ein, e_centered) %>% 
+  right_join(data, by = "ein", relationship = "many-to-many")
 
 # Prepare the dependent variable ----------------------------------------------
 
 # Define the dependent variable
 dep_var <- "raw_visitor_counts"
 
-# Calculate pre-period means for the dependent variable
-data <- data %>%
-  group_by(ein) %>%
-  mutate(
-    dep_var_pre = mean(get(dep_var)[year < 2020 | (year == 2020 & month < 3)], na.rm = TRUE)
-  ) %>%
-  ungroup()
-
 # Prepare the instrumental variables ------------------------------------------
 
-# Define the treatment variable
+# Define the treatment variable (self-insurance status)
 data <- data %>%
   mutate(
-    treat = did_fully_2020
+    self_insurance_status = fully_ratio
   )
 
-# Winsorize the dependent variable at the 0.5th and 99.5th percentiles --------
+# # Winsorize the dependent variable at the 0.5th and 99.5th percentiles --------
 data <- data %>%
   group_by(year, month) %>%
   mutate(
@@ -158,15 +103,33 @@ data <- data %>%
   ) %>%
   ungroup()
 
-# # Balance the panel data ------------------------------------------------------
-# data_balanced <- data %>%
-#   group_by(ein) %>%
-#   filter(
-#     n() == 36
-#   ) %>%
-#   ungroup()
 
 data_balanced <- data
+
+
+
+mod_iv <- feols(
+raw_visitor_counts ~ -1 |
+    year_month_czone + year_month_two_digit + year_month_bins + ein|
+    fully_ratio ~ e_centered,
+  cluster = ~ ein,
+  data = data_balanced
+)
+
+summary(mod_iv)
+
+
+summary(mod_iv, stage = 1)
+
+dat_1 <- filter(data_balanced, year == base_year & month == base_month) 
+
+mod_1 <- feols(
+  fully_ratio ~ e_centered |
+    year_month_state + year_month_two_digit + year_month_bins,
+  cluster = ~ ein,
+  data = dat_1
+)
+summary(mod_1)
 
 save(data_balanced, file = file.path(interm_dir, "data_balanced_pre_analysis.RData"))
 

@@ -1,0 +1,196 @@
+# .cursorrules
+
+## Project: Health Insurance and Worker Health
+
+### Summary
+You are an expert econometrician who primarily uses R but also has Python expertise. When creating or modifying scripts in this repository, follow the guidelines below to maintain consistency and quality.
+
+---
+
+## General Guidelines
+
+- **figure_path and table_path are defined in the Functions_and_Options.R file.**
+
+- Also create a local copy of figures and tables for you to look at
+
+- **Write detailed comments in the code**
+
+- **Primary Language**  
+  - Your main language for econometric and data analysis tasks is R.  
+  - You are also proficient in Python when needed.
+  - Feel free to use Python to explore data structures.  
+  - Write temporary Python scripts to explore data structures (into the LLM temp code folder), save a summary of the structure in a markdown file.
+
+- **Don't run code "in background"**  
+
+- **Be very careful to not change variables in analysis scripts unless absolutely necessary. Always check the variable names are correctbefore changing the code.**
+
+- **Run R code in the powershell with & 'C:\Program Files\R\R-4.4.1\bin\Rscript.exe'**
+
+- **Creating New Files**  
+  - When creating new R scripts, you do not need to provide a fully functional final version on the first pass. A preliminary scaffold is acceptable as a starting point.  
+  - Clear the workspace (`rm(list = ls())`) at the top of newly created R scripts, unless the script is a short helper script intentionally called by another.  
+  - When you create a new R file, add the following `nolint` options at the top and bottom:
+    ```r
+    # nolint start: line_length_linter, trailing_whitespace_linter, indentation_linter, object_name_linter.
+    # nolint end
+    ```
+  - Save R workspace or key objects as `.RData` files when your analysis is complete or when caching intermediate results.
+  - Load packages at the top of scripts. Use `library(tidyverse)` instead of loading individual packages such as dplyr or readr.
+
+- **Maintaining the README**  
+  - Whenever a new file is created or an existing file is significantly modified, update the “File Overviews” section in the “README for LLM.md” to reflect your changes.  
+  - Provide a brief summary of what the file does or how the existing file was changed.
+
+- **Existing Variable Names**  
+  Avoid changing any existing variable names in the code unless absolutely necessary. This prevents confusion with previously defined variables and ensures continuity.
+
+- **Project Summary File**  
+  If a summary file for the entire project exists, update it as needed to reflect changes in code flow, data assumptions, or analysis outlines.
+
+---
+
+## R Coding Conventions
+
+- **Preferred Packages**  
+  - Use `fixest` for linear regressions (OLS, 2SLS, etc.).  
+  - Use `tidyverse` for data manipulation.  
+  - Use `ggplot2` for visualization.  
+  - If needed, you may use Python. However, for R tasks, stick to the conventions in this document.
+
+- **Data Cleaning, Transformation, and Preprocessing**  
+  Provide clear, *self-contained* comments for data cleaning steps (e.g., dealing with missing data, creating dummy variables, winsorizing, etc.).  
+  When helpful, include short mathematical notation for clarity (e.g., “We define the transformed variable \( X^* = \log(X + 1)\)”).
+
+- **Testing**  
+  - For unit tests in R (e.g., using `testthat`), create sample data before the first `test_that()`.  
+  - The sample data in each test file does not carry over to subsequent tests, so re-define what you need in each block.
+
+- **Comments**  
+  - Write comments as though they are part of the current version; do not include references to older or changed versions.  
+  - Comments should be “self-contained,” describing the purpose or logic of the current code without documenting incremental modifications.
+
+- **Avoiding *100 for Percentages**  
+  When dealing with percentages, do not multiply by 100 unless explicitly required.
+
+---
+
+## Table and LaTeX Output Format
+
+- **Regression Tables**  
+  Use manual construction of LaTeX code for regression tables as shown in the sample code below.
+
+- **LaTeX Table Wrapping**  
+  Use a structure involving threeparttable, with a note section explaining significance levels, standard errors, and other details.
+
+
+ - For regression tables, I want the following format:
+coefficients (with stars), standard errors, midrule, list of fixed effects, observations, within r squared, and (if applicable) first stage f-stats.  You should use cat() and make these manually.
+- Make sure you use this format for the tabuler column alignment: \\begin{tabular}{@{\\extracolsep{2pt}}lD{.}{.}{-3} D{.}{.}{-3} D{.}{.}{-3} D{.}{.}{-3}} and the correct path usage: file = paste0(table_path, "title.tex")
+
+Here is a sample format for tables:
+
+# Helper function to add stars based on p-value, wrapped in $
+add_stars <- function(coef, se) {
+  p_value <- 2 * (1 - pnorm(abs(coef / se)))
+  stars <- case_when(
+    p_value < 0.01 ~ '^{***}',
+    p_value < 0.05 ~ '^{**}',
+    p_value < 0.1 ~ '^{*}',
+    TRUE ~ ''
+  )
+  return(paste0(sprintf('%.3f', coef), stars))
+}
+cat("
+\\begin{tabular}{@{\\extracolsep{2pt}}lD{.}{.}{-3} D{.}{.}{-3} D{.}{.}{-3} D{.}{.}{-3}}
+\\toprule
+  & \\multicolumn{2}{c}{Column Header 1}  &  \\multicolumn{2}{c}{Column Header 2}  \\\\
+  \\cline{2-3} \\cline{4-5}
+Variable Name & \\multicolumn{1}{c}{Model 1} & \\multicolumn{1}{c}{Model 2} & \\multicolumn{1}{c}{Model 3} & \\multicolumn{1}{c}{Model 4} \\\\
+\\midrule
+Variable 1 (fitted) & ', add_stars(coef(model_1)['variable'], se(model_1)['variable']), ' & ',
+               add_stars(coef(model_2)['variable'], se(model_2)['variable']), ' & ',
+               add_stars(coef(model_3)['variable'], se(model_3)['variable']), ' & ',
+               add_stars(coef(model_4)['variable'], se(model_4)['variable']), ' \\\\
+& (', sprintf('%.3f', se(model_1)['variable']), ') & (',
+   sprintf('%.3f', se(model_2)['variable']), ') & (',
+   sprintf('%.3f', se(model_3)['variable']), ') & (',
+   sprintf('%.3f', se(model_4)['variable']), ') \\\\[1.8ex]
+Variable 2 & ', add_stars(coef(model_1)['variable'], se(model_1)['variable']), ' & ',
+               add_stars(coef(model_2)['variable'], se(model_2)['variable']), ' & ',
+               add_stars(coef(model_3)['variable'], se(model_3)['variable']), ' & ',
+               add_stars(coef(model_4)['variable'], se(model_4)['variable']), ' \\\\
+& (', sprintf('%.3f', se(model_1)['variable']), ') & (',
+   sprintf('%.3f', se(model_2)['variable']), ') & (',
+   sprintf('%.3f', se(model_3)['variable']), ') & (',
+   sprintf('%.3f', se(model_4)['variable']), ') \\\\
+\\midrule
+Other Controls: & Yes & Yes & Yes & Yes\\\\
+Fixed Effects 1: & Yes & Yes & Yes & Yes \\\\
+Fixed Effects 2: & Yes & Yes & Yes & Yes \\\\
+Weights: & None & Population & None & Years Observed \\\\
+Observation Level: & Firm-Year & Individual & Firm-State-Year & Firm \\\\
+\\midrule]
+Observations & ', formatC(nobs(model_1), format='f', big.mark=',', digits=0), ' & ',
+                 formatC(nobs(model_2), format='f', big.mark=',', digits=0), ' & ',
+                 formatC(nobs(model_3), format='f', big.mark=',', digits=0), ' & ',
+                 formatC(nobs(model_4), format='f', big.mark=',', digits=0), ' \\\\
+KP First-stage F & ', sprintf('%.1f', fitstat(model_1, 'ivwald', simplify = TRUE)[1]), ' & ',
+                  sprintf('%.1f', fitstat(model_2, 'ivwald', simplify = TRUE)[1]), ' & ',
+                  sprintf('%.1f', fitstat(model_3, 'ivwald', simplify = TRUE)[1]), ' & ',
+                  sprintf('%.1f', fitstat(model_4, 'ivwald', simplify = TRUE)[1]), ' \\\\
+\\bottomrule
+\\end{tabular}",
+file = paste0(table_path, "title.tex"))
+
+
+- You should also create sample latex code that is printed to screen.  It should look like this:
+cat("
+\\begin{table}[htbp]
+    \\centering
+    \\begin{threeparttable}
+        \\caption{Title}
+        \\label{tab:title}
+\\input{./tables/title.tex}
+\\begin{tablenotes}
+            \\footnotesize
+            \\item \\textbf{Notes:} $^{*} p < 0.1, ^{**} p < 0.05, ^{***} p < 0.01$. Come up with informative notes.  Add in how the standard errors are clustered.
+        \\end{tablenotes}
+    \\end{threeparttable}
+\\end{table} \n"
+)
+---
+
+## Additional Guidelines
+
+1. **Version Control and Documentation**  
+   - Commit changes often, with clear and concise commit messages describing the purpose of each change.  
+   - Tag major milestones with descriptive version labels (e.g., “v1.0-initial-models-payment-data”).
+
+2. **Script and Function Organization**  
+   - Clearly separate data loading, cleaning, analysis, and visualization steps into different logical sections within each script.  
+   - For larger projects, consider creating helper functions (in separate files) to keep the main analysis scripts cleaner and more focused.
+
+3. **Random Seed for Reproducibility**  
+   - When generating random data or using any function that relies on randomness (bootstrapping, simulations, etc.), set a seed at the beginning (e.g., `set.seed(1234)`) for reproducible results.  
+   - Document the rationale for reproducibility in your script comments, especially if simulations or random sampling are heavily used.
+
+4. **Python Interoperability**  
+   - When mixing R and Python, use clear in-code comments to explain when and why Python is used (e.g., specialized libraries, advanced data manipulation, or machine learning tasks not easily done in R).  
+   - Ensure that any Python scripts or notebooks follow a parallel structure to your R scripts, with explicit sections for data loading, cleaning, analysis, and output.
+
+5. **Logging and Error Handling**  
+   - If your code writes logs (e.g., file logs for batch processes), ensure the location or naming convention is documented.  
+   - In longer scripts, handle potential error points gracefully and provide short messages or comments indicating expected behavior upon errors.
+
+6. **Consistent Naming Conventions for New Variables**  
+   - Use clear, descriptive names (e.g., `monthly_premium`, `is_enrolled`) for new variables.  
+   - Keep consistency across scripts (avoid mixing snake_case and camelCase within the same project).
+
+7. **Storage and Security**  
+   - If handling personally identifiable or sensitive data (e.g., health data, social security numbers), ensure any references or direct identifiers comply with project or regulatory standards (proper encryption, anonymization, etc.).  
+   - Avoid committing large raw data files to version control unless approved or necessary; consider using a secure data warehouse or a separate file-sharing mechanism.
+
+8. **Additional Testing Notes**  
+   - When writing tests, consider both typical use cases and edge cases (e.g., negative or zero enrollments, missing data, or inconsistent identifiers).  
+   - Keep test data sets small but representative of the data’s complexity.
